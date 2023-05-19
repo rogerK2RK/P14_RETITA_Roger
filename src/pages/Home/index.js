@@ -1,13 +1,50 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { addEmployee } from '../../redux/actions';
 import styles from "./styles.module.css"
 import { Link } from 'react-router-dom';
 
 
 function Home() {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [birth, setBirth] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [street, setStreet] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zipCode, setSipCode] = useState('');
+    const [department, setDepartment] = useState('');
 
-    function saveEmployee(e) {
+    const dispatch = useDispatch();
+
+    const firstNameRef = useRef();
+    const lastNameRef = useRef();
+    const birthRef = useRef();
+    const startDateRef = useRef();
+    const streetRef = useRef();
+    const cityRef = useRef();
+    const stateRef = useRef();
+    const zipCodeRef = useRef();
+    const departmentRef = useRef();
+
+    async function saveEmployee(e) {
         e.preventDefault();
-        console.log("Hello");
+        const employee ={ firstName, lastName, birth, startDate, street, city, state, zipCode, department };
+        
+        await setFirstName(firstNameRef.current.value);
+        await setLastName(lastNameRef.current.value);
+        await setBirth(birthRef.current.value);
+        await setStartDate(startDateRef.current.value);
+        await setStreet(streetRef.current.value);
+        await setCity(cityRef.current.value);
+        await setState(stateRef.current.value);
+        await setSipCode(zipCodeRef.current.value);
+        await setDepartment(departmentRef.current.value);
+
+        dispatch(addEmployee(employee));
+        console.log(firstNameRef.current.value);
+        console.log(employee);
     }
 
 
@@ -19,45 +56,45 @@ function Home() {
             <div className={styles["container"]}>
                 <Link to={"/employees"} className={styles["container-link"]}>View Current Employees</Link>
                 <h2 className={styles["container-title"]}>Create Employee</h2>
-                <form id="create-employee">
+                <form id="create-employee" onSubmit={saveEmployee}>
                     <div>
                         <label htmlFor="first-name">First Name</label>
-                        <input type="text" id="first-name" />
+                        <input ref={firstNameRef} type="text" id="first-name" />
                     </div>
                     <div>
                         <label htmlFor="last-name">Last Name</label>
-                        <input type="text" id="last-name" />
+                        <input ref={lastNameRef} type="text" id="last-name" />
                     </div>
                     <div>
                         <label htmlFor="date-of-birth">Date of Birth</label>
-                        <input id="date-of-birth" type="text" />
+                        <input ref={birthRef} id="date-of-birth" type="text" />
                     </div>
                     <div>
                         <label htmlFor="start-date">Start Date</label>
-                        <input id="start-date" type="text"/>
+                        <input ref={startDateRef} id="start-date" type="text"/>
                     </div>
                     <fieldset className={styles["address"]}>
                         <legend>Address</legend>
                         <div>
                             <label htmlFor="street">Street</label>
-                            <input id="street" type="text" />
+                            <input ref={streetRef} id="street" type="text" />
                         </div>
                         <div>
                             <label htmlFor="city">City</label>
-                            <input id="city" type="text" />
+                            <input ref={cityRef} id="city" type="text" />
                         </div>
                         <div>
                             <label htmlFor="state">State</label>
-                            <select name="state" id="state"></select>
+                            <select ref={stateRef} name="state" id="state"></select>
                         </div>
                         <div>
                             <label htmlFor="zip-code">Zip Code</label>
-                            <input id="zip-code" type="number" />
+                            <input ref={zipCodeRef} id="zip-code" type="number" />
                         </div>
                     </fieldset>
                     <div>
                         <label htmlFor="department">Department</label>
-                        <select name="department" id="department">
+                        <select ref={departmentRef} name="department" id="department">
                             <option>Sales</option>
                             <option>Marketing</option>
                             <option>Engineering</option>
