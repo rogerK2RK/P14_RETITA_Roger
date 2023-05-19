@@ -1,0 +1,30 @@
+.title, .container-link, .container-title, form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.container-link, .container-title, .container div {
+    width: 100%;
+}
+
+.container div {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
