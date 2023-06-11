@@ -157,7 +157,7 @@ function Home() {
         </form>
       </div>
       {showModal && (
-        <Modal message="Employee Created!" onClose={closeModal} />
+        <Modal className={styles[".box-modal"]} message="Employee Created!" onClose={closeModal} />
       )}
     </main>
   );
