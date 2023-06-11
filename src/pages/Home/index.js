@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addEmployee } from '../../redux/actions';
-import styles from "./styles.module.css"
+import styles from "./styles.module.css";
 import { Link } from 'react-router-dom';
+import DateInput from '../../components/DateInput/DateInput';
+import Modal from '../../components/Modal';
 
 function Home() {
   const [firstName, setFirstName] = useState('');
@@ -14,6 +16,7 @@ function Home() {
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [department, setDepartment] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -33,6 +36,24 @@ function Home() {
 
     dispatch(addEmployee(employee));
     console.log(employee);
+
+    // Afficher la modal
+    setShowModal(true);
+
+    // Réinitialiser les champs du formulaire
+    setFirstName('');
+    setLastName('');
+    setBirth('');
+    setStartDate('');
+    setStreet('');
+    setCity('');
+    setState('');
+    setZipCode('');
+    setDepartment('');
+  }
+
+  function closeModal() {
+    setShowModal(false);
   }
 
   return (
@@ -64,7 +85,7 @@ function Home() {
           </div>
           <div>
             <label htmlFor="date-of-birth">Date of Birth</label>
-            <input
+            <DateInput
               id="date-of-birth"
               type="text"
               value={birth}
@@ -73,12 +94,12 @@ function Home() {
           </div>
           <div>
             <label htmlFor="start-date">Start Date</label>
-            <input
+            {/* <DateInput
               id="start-date"
               type="text"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-            />
+            /> */}
           </div>
           <fieldset className={styles["address"]}>
             <legend>Address</legend>
@@ -135,7 +156,9 @@ function Home() {
           <button type="submit">Save</button>
         </form>
       </div>
-      <div id="confirmation" className={styles["modal"]}>Employee Created!</div>
+      {showModal && (
+        <Modal message="Employee Created!" onClose={closeModal} />
+      )}
     </main>
   );
 }

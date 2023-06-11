@@ -1,0 +1,68 @@
+.bx-date {
+    display: flex;
+}
+
+.saturday {
+    display: block;
+}
+
+.bx-date {
+    display: inline-block;
+    position: relative;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.prev-button, .next-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    margin: 0 10px;
+}
+
+.month-year {
+    cursor: pointer;
+}
+
+.year-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+.calendar-table th {
+    background-color: #f0f0f0;
+}
+
+.calendar-table td {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+    .calendar-header {
+        flex-direction: column;
+    }
+
+    .prev-button, .next-button {
+        margin: 5px 0;
+    }
+}
+
