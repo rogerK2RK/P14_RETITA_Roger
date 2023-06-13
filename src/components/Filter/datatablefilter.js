@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './datatablefilter.css'
+import './styles.module.css'
 
 function DataTableFilter({filterText, onFilter}) {
     return (
