@@ -5,6 +5,9 @@ import styles from "./styles.module.css";
 import { Link } from 'react-router-dom';
 import DateInput from '../../components/DateInput/DateInput';
 import Modal from '../../components/Modal';
+import List from '../../components/List/List';
+import departements from '../../components/TabList/departement.js';
+import states from '../../components/TabList/state.js';
 
 function Home() {
   const [firstName, setFirstName] = useState('');
@@ -19,6 +22,15 @@ function Home() {
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
+
+  const handleSelectDepartment = (department) => {
+    setDepartment(department);
+  };
+  const handleSelectState = (state) => {
+    setState(state);
+  };
+
+  const stateNames = states.map((thestate) => thestate.name);
 
   async function saveEmployee(e) {
     e.preventDefault();
@@ -123,14 +135,7 @@ function Home() {
             </div>
             <div>
               <label htmlFor="state">State</label>
-              <select
-                name="state"
-                id="state"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              >
-                {/* Ajoutez les options ici */}
-              </select>
+              <List states={stateNames} onSelectState={handleSelectState}/>
             </div>
             <div>
               <label htmlFor="zip-code">Zip Code</label>
@@ -144,14 +149,7 @@ function Home() {
           </fieldset>
           <div>
             <label htmlFor="department">Department</label>
-            <select
-              name="department"
-              id="department"
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-            >
-              {/* Ajoutez les options ici */}
-            </select>
+            <List states={departements} onSelectState={handleSelectDepartment}/>
           </div>
           <button type="submit">Save</button>
         </form>
