@@ -1,5 +1,6 @@
 .bx-date {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .saturday {
@@ -9,6 +10,7 @@
 .bx-date {
     display: inline-block;
     position: relative;
+    width: 450px;
 }
 
 .calendar-header {
@@ -67,6 +69,3 @@
 }
 
 
-.calendar-table tr > td:nth-child(7n+7) {
-    clear: both;
-}

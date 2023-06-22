@@ -49,8 +49,8 @@ function Home() {
     dispatch(addEmployee(employee));
     console.log(employee);
 
-    // Afficher la modal
-    setShowModal(true);
+    // // Afficher la modal
+    // setShowModal(true);
 
     // Réinitialiser les champs du formulaire
     setFirstName('');
@@ -62,6 +62,11 @@ function Home() {
     setState('');
     setZipCode('');
     setDepartment('');
+  }
+
+  // Afficher la modal
+  function openModal(){
+    setShowModal(true);
   }
 
   function closeModal() {
@@ -151,7 +156,7 @@ function Home() {
             <label htmlFor="department">Department</label>
             <List states={departements} onSelectState={handleSelectDepartment}/>
           </div>
-          <button type="submit">Save</button>
+          <button type="submit" onClick={openModal}>Save</button>
         </form>
       </div>
       {showModal && (

@@ -74,6 +74,7 @@ const DatePicker = () => {
     </td>
   ));
 
+
   const yearList = [];
   for (let i = year - 10; i <= year + 10; i++) {
     yearList.push(
@@ -117,7 +118,7 @@ const DatePicker = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr className={styles["grid-row"]}>
                   {emptyCells}
                   {monthDays}
                 </tr>
