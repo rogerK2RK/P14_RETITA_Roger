@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import { addEmployee } from '../../redux/actions';
 import styles from "./styles.module.css";
 import { Link } from 'react-router-dom';
-import DateInput from '../../components/DateInput/DateInput';
+// import DateInput from '../../components/DateInput/DateInput';
 import Modal from '../../components/Modal';
 import List from '../../components/List/List';
 import departements from '../../components/TabList/departement.js';
 import states from '../../components/TabList/state.js';
+import renderError from '../../components/emptyInput/index';
 
 function Home() {
   const [firstName, setFirstName] = useState('');
@@ -20,8 +21,11 @@ function Home() {
   const [zipCode, setZipCode] = useState('');
   const [department, setDepartment] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [errors, setErrors] = useState({});
+  
 
   const dispatch = useDispatch();
+
 
   const handleSelectDepartment = (department) => {
     setDepartment(department);
@@ -34,6 +38,36 @@ function Home() {
 
   async function saveEmployee(e) {
     e.preventDefault();
+    const newErrors = {};
+
+    if (firstName.trim() === '') {
+      newErrors.firstName = 'First Name is required';
+    }
+    if (lastName.trim() === '') {
+      newErrors.lastName = 'Last Name is required';
+    }
+    // if (birth.trim() === '') {
+    //   newErrors.birth = 'Date of birth is required';
+    // }
+    // if (startDate.trim() === '') {
+    //   newErrors.startDate = 'Start Date is required';
+    // }
+    if (street.trim() === '') {
+      newErrors.street = 'Street is required';
+    }
+    if (city.trim() === '') {
+      newErrors.city = 'City is required';
+    }
+    if (zipCode.trim() === '') {
+      newErrors.zipCode = 'zipCode is required';
+    }
+    // Ajoutez des vérifications similaires pour les autres champs
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     const employee = {
       firstName,
       lastName,
@@ -48,10 +82,7 @@ function Home() {
 
     dispatch(addEmployee(employee));
     console.log(employee);
-
-    // // Afficher la modal
-    // setShowModal(true);
-
+      
     // Réinitialiser les champs du formulaire
     setFirstName('');
     setLastName('');
@@ -62,12 +93,11 @@ function Home() {
     setState('');
     setZipCode('');
     setDepartment('');
+
+    setShowModal(true);
+    
   }
 
-  // Afficher la modal
-  function openModal(){
-    setShowModal(true);
-  }
 
   function closeModal() {
     setShowModal(false);
@@ -90,6 +120,7 @@ function Home() {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
+            {errors.firstName && renderError(errors.firstName)}
           </div>
           <div>
             <label htmlFor="last-name">Last Name</label>
@@ -99,15 +130,17 @@ function Home() {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
+            {errors.lastName && renderError(errors.lastName)}
           </div>
           <div>
             <label htmlFor="date-of-birth">Date of Birth</label>
-            <DateInput
+            {/* <DateInput
               id="date-of-birth"
               type="text"
               value={birth}
               onChange={(e) => setBirth(e.target.value)}
-            />
+            /> 
+            {errors.birth && renderError(errors.birth)}*/}
           </div>
           <div>
             <label htmlFor="start-date">Start Date</label>
@@ -116,7 +149,8 @@ function Home() {
               type="text"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-            /> */}
+            /> 
+            {errors.startDate && renderError(errors.startDate)}*/}
           </div>
           <fieldset className={styles["address"]}>
             <legend>Address</legend>
@@ -128,6 +162,7 @@ function Home() {
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
               />
+              {errors.street && renderError(errors.street)}
             </div>
             <div>
               <label htmlFor="city">City</label>
@@ -137,6 +172,7 @@ function Home() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
+              {errors.city && renderError(errors.city)}
             </div>
             <div>
               <label htmlFor="state">State</label>
@@ -150,13 +186,14 @@ function Home() {
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
               />
+              {errors.zipCode && renderError(errors.zipCode)}
             </div>
           </fieldset>
           <div>
             <label htmlFor="department">Department</label>
             <List states={departements} onSelectState={handleSelectDepartment}/>
           </div>
-          <button type="submit" onClick={openModal}>Save</button>
+          <button type="submit" >Save</button>
         </form>
       </div>
       {showModal && (
