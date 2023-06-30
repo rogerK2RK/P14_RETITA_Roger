@@ -29,7 +29,13 @@ const TabList = (props) => {
   const sortedEmployees = [...props.employees].sort((a, b) => {
     const valueA = a[sortedColumn];
     const valueB = b[sortedColumn];
-    const comparison = valueA.localeCompare(valueB);
+    let comparison = 0;
+
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      comparison = valueA.localeCompare(valueB);
+    } else {
+      comparison = valueA - valueB;
+    }
 
     return sortOrder === 'asc' ? comparison : -comparison;
   });
@@ -51,15 +57,25 @@ const TabList = (props) => {
             <th onClick={() => handleSort('lastName')}>
               Last Name {getSortIcon('lastName')}
             </th>
-            <th>Birth</th>
-            <th>Start Date</th>
-            <th>Street</th>
-            <th>City</th>
+            <th onClick={() => handleSort('birth')}>
+              Birth {getSortIcon('birth')}
+            </th>
+            <th onClick={() => handleSort('startDate')}>
+              Start Date {getSortIcon('startDate')}
+            </th>
+            <th onClick={() => handleSort('street')}>
+              Street {getSortIcon('street')}
+            </th>
+            <th onClick={() => handleSort('city')}>
+              City {getSortIcon('city')}
+            </th>
             <th>State</th>
             <th onClick={() => handleSort('zipCode')}>
               Zip Code {getSortIcon('zipCode')}
             </th>
-            <th>Département</th>
+            <th onClick={() => handleSort('departement')}>
+              Département {getSortIcon('departement')}
+            </th>
           </tr>
         </thead>
         <tbody>
