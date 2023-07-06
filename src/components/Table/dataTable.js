@@ -5,6 +5,7 @@ const TabList = (props) => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState('firstName');
   const [searchValue, setSearchValue] = useState('');
+  const [showEntries, setShowEntries] = useState(10);
 
   const handleSort = (columnName) => {
     if (columnName === sortedColumn) {
@@ -43,6 +44,7 @@ const TabList = (props) => {
       employee.department.toLowerCase().includes(search)
     );
   })
+  .slice(0, showEntries) // Utiliser la valeur sélectionnée pour limiter le nombre d'employés affichés  
   .sort((a, b) => {
     // Trier les résultats filtrés
     const valueA = a[sortedColumn];
@@ -58,16 +60,22 @@ const TabList = (props) => {
     return sortOrder === 'asc' ? comparison : -comparison;
   });
 
+  const startIndex = 1;
+  const endIndex = Math.min(startIndex + showEntries - 1, sortedEmployees.length);
+
   return (
     <div className={Styles["tablist-container"]}>
       <div className={Styles["first-bloc"]}>
-        <label>Show 
-        <select className={Styles['show']}>
-          <option>10</option>
-          <option>25</option>
-          <option>50</option>
-          <option>100</option>
-        </select> entries</label>
+        <label>
+          Show 
+          <select className={Styles['show']} value={showEntries} onChange={(e) => setShowEntries(Number(e.target.value))}>
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select> 
+           entries
+        </label>
         <label>
           Search : 
           <input
@@ -113,7 +121,7 @@ const TabList = (props) => {
           </tr>
         </thead>
         <tbody>
-          {sortedEmployees.map((employee, index) => (
+          {(sortedEmployees.length >= 1 )?sortedEmployees.map((employee, index) => (
             <tr key={index}>
               <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>
@@ -125,16 +133,21 @@ const TabList = (props) => {
               <td>{employee.zipCode}</td>
               <td>{employee.department}</td>
             </tr>
-          ))}
+          )):<div className={Styles["no-data"]}>No data available in table</div>}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="9"></td>
+          </tr>
+        </tfoot>
       </table>
       <div className={Styles["last-bloc"]}>
         <div>
-            <p>Showing {1} to {sortedEmployees.length} of {sortedEmployees.length} entries</p>
+            <p>Showing {startIndex} to {endIndex} of {sortedEmployees.length} entries</p>
         </div>
         <div className={Styles["page-bloc"]}>
             <button>Previous</button>
-            <p>1</p>
+            <button>1</button>
             <button>Previous</button>
         </div>
       </div>
