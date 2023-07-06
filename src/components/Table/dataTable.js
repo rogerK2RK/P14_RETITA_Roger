@@ -126,6 +126,7 @@ const TabList = (props) => {
               <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>
               <td>{employee.birth}</td>
+              {/* <td>{new Date(employee.birth).toLocaleDateString()}</td> Modification ici */}
               <td>{employee.startDate}</td>
               <td>{employee.street}</td>
               <td>{employee.city}</td>

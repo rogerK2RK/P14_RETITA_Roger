@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addEmployee } from '../../redux/actions';
 import styles from "./styles.module.css";
 import { Link } from 'react-router-dom';
-// import DateInput from '../../components/DateInput/DateInput';
+import DatePicker  from '../../components/DateInput/DateInput';
 import Modal from '../../components/Modal';
 import List from '../../components/List/List';
 import departements from '../../components/TabList/departement.js';
@@ -33,6 +33,9 @@ function Home() {
   const handleSelectState = (state) => {
     setState(state);
   };
+  const handleSelectBirth = (birth) => {
+    setBirth(birth);
+  };
 
   const stateNames = states.map((thestate) => thestate.name);
 
@@ -46,9 +49,9 @@ function Home() {
     if (lastName.trim() === '') {
       newErrors.lastName = 'Last Name is required';
     }
-    // if (birth.trim() === '') {
-    //   newErrors.birth = 'Date of birth is required';
-    // }
+    if (birth.trim() === '') {
+      newErrors.birth = 'Date of birth is required';
+    }
     // if (startDate.trim() === '') {
     //   newErrors.startDate = 'Start Date is required';
     // }
@@ -117,6 +120,7 @@ function Home() {
             <input
               type="text"
               id="first-name"
+              placeholder='Jean'
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -127,6 +131,7 @@ function Home() {
             <input
               type="text"
               id="last-name"
+              placeholder='Robert'
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -134,13 +139,13 @@ function Home() {
           </div>
           <div>
             <label htmlFor="date-of-birth">Date of Birth</label>
-            {/* <DateInput
+            <DatePicker 
               id="date-of-birth"
               type="text"
-              value={birth}
-              onChange={(e) => setBirth(e.target.value)}
+              selectedDate={birth}
+              onDateChange={handleSelectBirth}
             /> 
-            {errors.birth && renderError(errors.birth)}*/}
+            {errors.birth && renderError(errors.birth)}
           </div>
           <div>
             <label htmlFor="start-date">Start Date</label>
@@ -159,6 +164,7 @@ function Home() {
               <input
                 id="street"
                 type="text"
+                placeholder='4 rue Robert'
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
               />
@@ -169,6 +175,7 @@ function Home() {
               <input
                 id="city"
                 type="text"
+                placeholder='Paris'
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />

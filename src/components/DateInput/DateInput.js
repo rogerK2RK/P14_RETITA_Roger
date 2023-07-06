@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css'
 
-const DatePicker = () => {
+const DatePicker = (props) => {
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
@@ -10,9 +10,12 @@ const DatePicker = () => {
   const [year, setYear] = useState(currentDate.getFullYear());
 
   const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
+    const date = event.target.value;
+    setSelectedDate(date);
+    props(date);
     // setShowYears(false);
   };
+  
 
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
@@ -68,11 +71,23 @@ const DatePicker = () => {
   const daysInMonth = getDaysInMonth();
   const firstDayOfMonth = daysInMonth[0].getDay();
   const emptyCells = Array.from({ length: firstDayOfMonth }, (_, index) => <td key={`empty-${index}`}></td>);
-  const monthDays = daysInMonth.map((day, index) => (
-    <td key={`day-${index}`} onClick={() => selectDate(day.getDate())}>
-      {day.getDate()}
-    </td>
-  ));
+  const monthDays = [];
+  let currentRow = emptyCells;
+
+  daysInMonth.forEach((day, index) => {
+    currentRow.push(
+      <td data-date={day} data-month={month} data-year={year} key={`day-${index}`} onClick={() => selectDate(day.getDate())}>
+        <div>{day.getDate()}</div>
+      </td>
+    );
+
+    if (currentRow.length === 7 || index === daysInMonth.length - 1) {
+      monthDays.push(<tr className={styles["grid-row"]}>{currentRow}</tr>);
+      currentRow = [];
+    }
+  });
+
+
 
 
   const yearList = [];
@@ -118,10 +133,7 @@ const DatePicker = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className={styles["grid-row"]}>
-                  {emptyCells}
                   {monthDays}
-                </tr>
               </tbody>
             </table>
           )}
