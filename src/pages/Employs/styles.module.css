@@ -4,3 +4,10 @@
     align-items: center;
     justify-content: center;
 }
+
+.box-link {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}

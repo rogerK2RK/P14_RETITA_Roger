@@ -4,6 +4,7 @@ import Styles from './styles.module.css';
 const TabList = (props) => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState('firstName');
+  const [searchValue, setSearchValue] = useState('');
 
   const handleSort = (columnName) => {
     if (columnName === sortedColumn) {
@@ -26,7 +27,24 @@ const TabList = (props) => {
     }
   };
 
-  const sortedEmployees = [...props.employees].sort((a, b) => {
+  const sortedEmployees = [...props.employees]
+  .filter((employee) => {
+    // Filtrer en fonction de la valeur de recherche
+    const search = searchValue.toLowerCase();
+    return (
+      employee.firstName.toLowerCase().includes(search) ||
+      employee.lastName.toLowerCase().includes(search) ||
+      employee.birth.toLowerCase().includes(search) ||
+      employee.startDate.toLowerCase().includes(search) ||
+      employee.street.toLowerCase().includes(search) ||
+      employee.city.toLowerCase().includes(search) ||
+      employee.state.toLowerCase().includes(search) ||
+      employee.zipCode.toLowerCase().includes(search) ||
+      employee.department.toLowerCase().includes(search)
+    );
+  })
+  .sort((a, b) => {
+    // Trier les résultats filtrés
     const valueA = a[sortedColumn];
     const valueB = b[sortedColumn];
     let comparison = 0;
@@ -42,11 +60,25 @@ const TabList = (props) => {
 
   return (
     <div className={Styles["tablist-container"]}>
-      <input
-        type="text"
-        placeholder="Filter employees"
-        className={Styles["tablist-input"]}
-      />
+      <div className={Styles["first-bloc"]}>
+        <label>Show 
+        <select className={Styles['show']}>
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+          <option>100</option>
+        </select> entries</label>
+        <label>
+          Search : 
+          <input
+            type="text"
+            placeholder="Filter employees"
+            className={Styles["tablist-input"]}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </label>
+      </div>
 
       <table className={Styles["tablist-table"]}>
         <thead>
@@ -69,12 +101,14 @@ const TabList = (props) => {
             <th onClick={() => handleSort('city')}>
               City {getSortIcon('city')}
             </th>
-            <th>State</th>
+            <th onClick={() => handleSort('state')}>
+              State {getSortIcon('state')}
+            </th>
             <th onClick={() => handleSort('zipCode')}>
               Zip Code {getSortIcon('zipCode')}
             </th>
-            <th onClick={() => handleSort('departement')}>
-              Département {getSortIcon('departement')}
+            <th onClick={() => handleSort('department')}>
+              Département {getSortIcon('department')}
             </th>
           </tr>
         </thead>
@@ -94,6 +128,16 @@ const TabList = (props) => {
           ))}
         </tbody>
       </table>
+      <div className={Styles["last-bloc"]}>
+        <div>
+            <p>Showing {1} to {sortedEmployees.length} of {sortedEmployees.length} entries</p>
+        </div>
+        <div className={Styles["page-bloc"]}>
+            <button>Previous</button>
+            <p>1</p>
+            <button>Previous</button>
+        </div>
+      </div>
     </div>
   );
 };

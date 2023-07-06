@@ -9,7 +9,7 @@
   }
   
   .tablist-input {
-    width: 100%;
+    /* width: 100%; */
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -65,4 +65,17 @@
   .tablist-table th:nth-child(9),
   .tablist-table td:nth-child(9) {
     width: 150px;
+  }
+
+  .first-bloc, .last-bloc {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-bloc {
+    display: flex;
+  }
+
+  select {
+    margin-left: 5px;
   }

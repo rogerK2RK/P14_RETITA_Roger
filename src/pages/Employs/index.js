@@ -17,7 +17,9 @@ function Employee() {
             <h1>Current Employees</h1>
             <section>
                 <TabList employees={employees}/>
-                <Link to={"/"}>Home</Link>
+                <div className={styles["box-link"]}>
+                    <Link to={"/"}>Home</Link>
+                </div>
             </section>
         </div>
     );
