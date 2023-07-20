@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css'
 
+// Icons
+const caretUpIcon = '\u25B2'; // Unicode for ▲
+const caretDownIcon = '\u25BC'; // Unicode for ▼
+
 const DatePicker = (props) => {
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState('');
@@ -13,13 +17,11 @@ const DatePicker = (props) => {
     const date = event.target.value;
     setSelectedDate(date);
     props(date);
-    // setShowYears(false);
   };
   
 
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
-    // setShowYears(false);
   };
 
   const toggleYears = () => {
@@ -50,12 +52,10 @@ const DatePicker = (props) => {
     const formattedYear = year.toString();
     const selectedDateString = `${formattedDay}.${formattedMonth}.${formattedYear}`;
     setSelectedDate(selectedDateString);
-    // setShowCalendar(false);
   };
 
   const selectYear = (selectedYear) => {
     setYear(selectedYear);
-    // setShowYears(false);
   };
 
   const getDaysInMonth = () => {
@@ -88,19 +88,46 @@ const DatePicker = (props) => {
   });
 
 
+  const scrollYearsUp = () => {
+    const newYearList = [];
+    for (let i = year - 9; i <= year + 1; i++) {
+      newYearList.push(
+        <li key={i} onClick={() => selectYear(i)}>
+          {i}
+        </li>
+      );
+    }
+    setYear(year - 1);
+    setYearList(newYearList);
+  };
 
+  const scrollYearsDown = () => {
+    const newYearList = [];
+    for (let i = year; i <= year + 10; i++) {
+      newYearList.push(
+        <li key={i} onClick={() => selectYear(i)}>
+          {i}
+        </li>
+      );
+    }
+    setYear(year + 1);
+    setYearList(newYearList);
+  };
 
-  const yearList = [];
-  for (let i = year - 10; i <= year + 10; i++) {
-    yearList.push(
-      <li key={i} onClick={() => selectYear(i)}>
-        {i}
-      </li>
-    );
-  }
+  const [yearList, setYearList] = useState(() => {
+    const initialYearList = [];
+    for (let i = year - 9; i <= year + 10; i++) {
+      initialYearList.push(
+        <li key={i} onClick={() => selectYear(i)}>
+          {i}
+        </li>
+      );
+    }
+    return initialYearList;
+  });
 
   return (
-    <div>
+    <div className={styles["bx-inpt-date"]}>
       <input
         type="text"
         value={selectedDate}
@@ -110,7 +137,6 @@ const DatePicker = (props) => {
         onBlur={toggleCalendar}
       />
       {
-      // showCalendar && (
         <div className={styles["bx-date"]} >
           <div className={styles['calendar-header']}>
             <button className={styles['prev-button']} onClick={prevMonth}>&lt;</button>
@@ -118,7 +144,15 @@ const DatePicker = (props) => {
             <button className={styles['next-button']} onClick={nextMonth}>&gt;</button>
           </div>
           {showYears ? (
-            <ul className={styles['year-list']}>{yearList}</ul>
+            <ul className={styles['year-list']}>
+              <button className={styles['scroll-button']} onClick={scrollYearsUp}>
+                {caretUpIcon}
+              </button>
+                {yearList}
+              <button className={styles['scroll-button']} onClick={scrollYearsDown}>
+                {caretDownIcon}
+              </button>
+            </ul>
           ) : (
             <table className={styles['calendar-table']}>
               <thead>
@@ -138,7 +172,6 @@ const DatePicker = (props) => {
             </table>
           )}
         </div>
-      // )
       }
     </div>
   );

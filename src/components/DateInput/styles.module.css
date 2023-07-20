@@ -8,7 +8,10 @@
 
 .bx-date {
     display: inline-block;
-    position: relative;
+    position: absolute;
+    left: 0px;
+    right: -10px;
+    background-color: #FFF;
 }
 
 .calendar-header {
@@ -35,6 +38,12 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+}
+
+.year-list li {
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 .calendar-table {
@@ -69,4 +78,8 @@
 
 .calendar-table tr > td:nth-child(7n+7) {
     clear: both;
+}
+
+.bx-inpt-date {
+    position: relative;
 }
