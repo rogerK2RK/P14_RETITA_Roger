@@ -9,6 +9,7 @@
 .bx-date {
     display: inline-block;
     position: absolute;
+    /* position: relative; */
     left: 0px;
     right: -10px;
     background-color: #FFF;
@@ -45,6 +46,11 @@
     justify-content: center;
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.year-list li:hover{
+    background-color: rgb(153, 203, 253);
 }
 
 .calendar-table {

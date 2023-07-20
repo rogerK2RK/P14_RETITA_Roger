@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css'
 
 // Icons
@@ -7,17 +7,38 @@ const caretDownIcon = '\u25BC'; // Unicode for ▼
 
 const DatePicker = (props) => {
   const currentDate = new Date();
+  // const states = props.states;
   const [selectedDate, setSelectedDate] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [showYears, setShowYears] = useState(false);
   const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
+  console.log(props);
 
-  const handleDateChange = (event) => {
-    const date = event.target.value;
-    setSelectedDate(date);
-    props(date);
-  };
+  const bxDateRef = useRef(null);
+
+  useEffect(() => {
+    // Event listener to detect clicks outside the bx-date div
+    const handleClickOutside = (event) => {
+      if (bxDateRef.current && !bxDateRef.current.contains(event.target)) {
+        setShowCalendar(false);
+      }
+    };
+
+    // Add event listener when the component mounts
+    document.addEventListener('click', handleClickOutside);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  // const handleDateChange = (event) => {
+  //   const selectedDate = event.target.value;
+  //   setSelectedDate(selectedDate);
+  //   props.onChange(selectedDate); 
+  // };
   
 
   const toggleCalendar = () => {
@@ -77,12 +98,12 @@ const DatePicker = (props) => {
   daysInMonth.forEach((day, index) => {
     currentRow.push(
       <td data-date={day} data-month={month} data-year={year} key={`day-${index}`} onClick={() => selectDate(day.getDate())}>
-        <div>{day.getDate()}</div>
+        <div  key={`day-${index}`}>{day.getDate()}</div>
       </td>
     );
 
     if (currentRow.length === 7 || index === daysInMonth.length - 1) {
-      monthDays.push(<tr className={styles["grid-row"]}>{currentRow}</tr>);
+      monthDays.push(<tr className={styles["grid-row"]} key={`tr-${index}`}>{currentRow}</tr>);
       currentRow = [];
     }
   });
@@ -130,14 +151,15 @@ const DatePicker = (props) => {
     <div className={styles["bx-inpt-date"]}>
       <input
         type="text"
+        id={props.id}
         value={selectedDate}
-        onChange={handleDateChange}
+        // onChange={handleDateChange}
         placeholder="Format: dd.mm.yyyy"
         onFocus={toggleCalendar}
-        onBlur={toggleCalendar}
+        //onBlur={toggleCalendar}
       />
       {
-        <div className={styles["bx-date"]} >
+        <div className={styles["bx-date"]}  ref={bxDateRef} >
           <div className={styles['calendar-header']}>
             <button className={styles['prev-button']} onClick={prevMonth}>&lt;</button>
             <span className={styles['month-year']} onClick={toggleYears}>{`${year} - ${month + 1}`}</span>

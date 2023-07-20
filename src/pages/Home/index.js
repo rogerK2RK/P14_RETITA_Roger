@@ -13,8 +13,8 @@ import renderError from '../../components/emptyInput/index';
 function Home() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [birth, setBirth] = useState('');
-  const [startDate, setStartDate] = useState('');
+  let [birth, setBirth] = useState('');
+  let [startDate, setStartDate] = useState('');
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -33,15 +33,24 @@ function Home() {
   const handleSelectState = (state) => {
     setState(state);
   };
-  const handleSelectBirth = (birth) => {
-    setBirth(birth);
-  };
+  // const handleBirth = (birth) => {
+  //   setBirth(birth); 
+  // };
+  // const handleSelectStartDate = (date) => {
+  //   setStartDate(date); 
+  // };
 
   const stateNames = states.map((thestate) => thestate.name);
 
   async function saveEmployee(e) {
     e.preventDefault();
     const newErrors = {};
+    console.log(firstName);
+    console.log(e);
+
+    birth = document.getElementById('birth').value;
+    startDate = document.getElementById('start-date').value;
+
 
     if (firstName.trim() === '') {
       newErrors.firstName = 'First Name is required';
@@ -52,9 +61,9 @@ function Home() {
     if (birth.trim() === '') {
       newErrors.birth = 'Date of birth is required';
     }
-    // if (startDate.trim() === '') {
-    //   newErrors.startDate = 'Start Date is required';
-    // }
+    if (startDate.trim() === '') {
+      newErrors.startDate = 'Start Date is required';
+    }
     if (street.trim() === '') {
       newErrors.street = 'Street is required';
     }
@@ -140,22 +149,22 @@ function Home() {
           <div>
             <label htmlFor="date-of-birth">Date of Birth</label>
             <DatePicker 
-              id="date-of-birth"
-              type="text"
-              selectedDate={birth}
-              onDateChange={handleSelectBirth}
+              id="birth"
+              type="date"
+              value={birth}
+              onChange={(e) => setBirth('12.05.1999')}
             /> 
             {errors.birth && renderError(errors.birth)}
           </div>
           <div>
             <label htmlFor="start-date">Start Date</label>
-            {/* <DateInput
+            <DatePicker
               id="start-date"
-              type="text"
+              type="date"
               value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
+              onChange={(e) => setBirth(e.target.value)}
             /> 
-            {errors.startDate && renderError(errors.startDate)}*/}
+            {errors.startDate && renderError(errors.startDate)}
           </div>
           <fieldset className={styles["address"]}>
             <legend>Address</legend>
