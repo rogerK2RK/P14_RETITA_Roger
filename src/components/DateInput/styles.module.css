@@ -7,13 +7,18 @@
 }
 
 .bx-date {
+    /* display: none; */
     display: inline-block;
-    /* position: absolute; */
-    position: relative;
+    position: absolute;
+    /* position: relative; */
     left: 0px;
     right: -10px;
     background-color: #FFF;
 }
+
+/* .active {
+    display: block ! important;
+} */
 
 .calendar-header {
     display: flex;

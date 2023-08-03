@@ -8,6 +8,7 @@ const caretDownIcon = '\u25BC'; // Unicode for ▼
 const DatePicker = (props) => {
   const currentDate = new Date();
   // const states = props.states;
+  // const [isCalendarActive, setCalendarActive] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [showYears, setShowYears] = useState(false);
@@ -21,7 +22,8 @@ const DatePicker = (props) => {
     // Event listener to detect clicks outside the bx-date div
     const handleClickOutside = (event) => {
       if (bxDateRef.current && !bxDateRef.current.contains(event.target)) {
-        setShowCalendar(false);
+        // setShowCalendar(false);
+        // setCalendarActive(false);
       }
     };
 
@@ -43,6 +45,7 @@ const DatePicker = (props) => {
 
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
+    // setCalendarActive(!isCalendarActive);
   };
 
   const toggleYears = () => {
@@ -156,10 +159,10 @@ const DatePicker = (props) => {
         // onChange={handleDateChange}
         placeholder="Format: dd.mm.yyyy"
         onFocus={toggleCalendar}
-        //onBlur={toggleCalendar}
+        // onBlur={toggleCalendar}
       />
-      {
-        <div className={styles["bx-date"]}  ref={bxDateRef} >
+      { showCalendar ? (
+        <div className={styles['bx-date']}  ref={bxDateRef} >
           <div className={styles['calendar-header']}>
             <button className={styles['prev-button']} onClick={prevMonth}>&lt;</button>
             <span className={styles['month-year']} onClick={toggleYears}>{`${year} - ${month + 1}`}</span>
@@ -194,7 +197,7 @@ const DatePicker = (props) => {
             </table>
           )}
         </div>
-      }
+      ):''}
     </div>
   );
 };
