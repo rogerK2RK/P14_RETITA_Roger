@@ -13,7 +13,7 @@ const DatePicker = (props) => {
   const [showYears, setShowYears] = useState(false);
   const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
-  console.log(props);
+  // console.log(props);
 
   const bxDateRef = useRef(null);
 

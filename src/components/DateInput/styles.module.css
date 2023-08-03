@@ -8,8 +8,8 @@
 
 .bx-date {
     display: inline-block;
-    position: absolute;
-    /* position: relative; */
+    /* position: absolute; */
+    position: relative;
     left: 0px;
     right: -10px;
     background-color: #FFF;

@@ -33,23 +33,16 @@ function Home() {
   const handleSelectState = (state) => {
     setState(state);
   };
-  // const handleBirth = (birth) => {
-  //   setBirth(birth); 
-  // };
-  // const handleSelectStartDate = (date) => {
-  //   setStartDate(date); 
-  // };
 
   const stateNames = states.map((thestate) => thestate.name);
 
   async function saveEmployee(e) {
     e.preventDefault();
     const newErrors = {};
-    console.log(firstName);
-    console.log(e);
-
     birth = document.getElementById('birth').value;
-    startDate = document.getElementById('start-date').value;
+    startDate =  document.getElementById('start-date').value;
+    console.log(birth)
+    console.log(startDate)
 
 
     if (firstName.trim() === '') {
@@ -59,10 +52,10 @@ function Home() {
       newErrors.lastName = 'Last Name is required';
     }
     if (birth.trim() === '') {
-      newErrors.birth = 'Date of birth is required';
+      newErrors.street = 'birth is required';
     }
     if (startDate.trim() === '') {
-      newErrors.startDate = 'Start Date is required';
+      newErrors.street = 'Start Date is required';
     }
     if (street.trim() === '') {
       newErrors.street = 'Street is required';
@@ -150,10 +143,9 @@ function Home() {
             <label htmlFor="date-of-birth">Date of Birth</label>
             <DatePicker 
               id="birth"
-              type="date"
               value={birth}
-              onChange={(e) => setBirth('12.05.1999')}
-            /> 
+              onChange={(e) => setBirth(e.target.value)}
+            />
             {errors.birth && renderError(errors.birth)}
           </div>
           <div>
@@ -162,7 +154,7 @@ function Home() {
               id="start-date"
               type="date"
               value={startDate}
-              onChange={(e) => setBirth(e.target.value)}
+              onChange={(e) => setStartDate(e.target.value)}
             /> 
             {errors.startDate && renderError(errors.startDate)}
           </div>
