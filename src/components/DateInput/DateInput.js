@@ -76,10 +76,12 @@ const DatePicker = (props) => {
     const formattedYear = year.toString();
     const selectedDateString = `${formattedDay}.${formattedMonth}.${formattedYear}`;
     setSelectedDate(selectedDateString);
+    setShowCalendar(!showCalendar);
   };
 
   const selectYear = (selectedYear) => {
     setYear(selectedYear);
+    setShowYears(!showYears);
   };
 
   const getDaysInMonth = () => {
