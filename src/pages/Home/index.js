@@ -9,17 +9,20 @@ import List from '../../components/List/List';
 import departements from '../../components/TabList/departement.js';
 import states from '../../components/TabList/state.js';
 import renderError from '../../components/emptyInput/index';
+// import  Modal  from 'simple-modal-library';
 
 function Home() {
+  const stateNames = states.map((thestate) => thestate.name);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   let [birth, setBirth] = useState('');
   let [startDate, setStartDate] = useState('');
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [state, setState] = useState(stateNames[0]);
   const [zipCode, setZipCode] = useState('');
-  const [department, setDepartment] = useState('');
+  const [department, setDepartment] = useState(departements[0]);
   const [showModal, setShowModal] = useState(false);
   const [errors, setErrors] = useState({});
   
@@ -34,7 +37,6 @@ function Home() {
     setState(state);
   };
 
-  const stateNames = states.map((thestate) => thestate.name);
 
   async function saveEmployee(e) {
     e.preventDefault();
@@ -184,7 +186,7 @@ function Home() {
             </div>
             <div>
               <label htmlFor="state">State</label>
-              <List states={stateNames} onSelectState={handleSelectState}/>
+              <List states={stateNames} onSelectState={handleSelectState} /*defaultValue={stateNames[0]}*//>
             </div>
             <div>
               <label htmlFor="zip-code">Zip Code</label>
@@ -199,7 +201,7 @@ function Home() {
           </fieldset>
           <div>
             <label htmlFor="department">Department</label>
-            <List states={departements} onSelectState={handleSelectDepartment}/>
+            <List states={departements} onSelectState={handleSelectDepartment}  defaultValue={departements[0]}/>
           </div>
           <button type="submit" >Save</button>
         </form>
