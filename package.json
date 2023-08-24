@@ -17,7 +17,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "simple-modal-library": "^0.1.3",
+    "simple-modal-library": "^0.1.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -45,6 +45,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.22.5"
+    "@babel/plugin-syntax-jsx": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3"
   }
 }
