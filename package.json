@@ -17,7 +17,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "simple-modal-library": "^0.1.6",
+    "simple-modal-library": "^0.1.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

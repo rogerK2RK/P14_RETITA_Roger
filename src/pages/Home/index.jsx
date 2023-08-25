@@ -4,12 +4,12 @@ import { addEmployee } from '../../redux/actions';
 import styles from "./styles.module.css";
 import { Link } from 'react-router-dom';
 import DatePicker  from '../../components/DateInput/DateInput';
-import Modal from '../../components/Modal';
+// import Modal from '../../components/Modal';
 import List from '../../components/List/List';
 import departements from '../../components/TabList/departement.js';
 import states from '../../components/TabList/state.js';
 import renderError from '../../components/emptyInput/index';
-// import  Modal  from 'simple-modal-library';
+import  Modal  from 'simple-modal-library';
 
 function Home() {
   const stateNames = states.map((thestate) => thestate.name);
